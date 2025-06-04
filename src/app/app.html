@@ -14,7 +14,7 @@
             Features
           </a>
           <ul class="dropdown-menu" aria-labelledby="featuresDropdown">
-            <li><a class="dropdown-item" href="#">Inventory</a></li>
+            <li><a class="dropdown-item" routerLink="/inventory">Inventory</a></li>
             <li><a class="dropdown-item" href="#">Customers</a></li>
           </ul>
         </li>
@@ -26,51 +26,11 @@
   </div>
 </nav>
 
-<!-- Hero Section -->
-<section class="bg-light py-5 text-center">
-  <div class="container">
-    <h1 class="display-4">Welcome to Zeta Inventory</h1>
-    <p class="lead">Manage your shop’s inventory with ease and efficiency.</p>
-    <a href="#" class="btn btn-primary btn-lg mt-3">Get Started</a>
-  </div>
-</section>
-
-<!-- Features -->
-<section class="py-5">
-  <div class="container">
-    <h2 class="text-center mb-5">Why Choose Us</h2>
-    <div class="row text-center">
-      <div class="col-md-4 mb-4">
-        <div class="card shadow h-100">
-          <div class="card-body">
-            <h5 class="card-title">Real-time Tracking</h5>
-            <p class="card-text">Monitor stock levels and movements in real-time to reduce losses.</p>
-          </div>
-        </div>
-      </div>
-      <div class="col-md-4 mb-4">
-        <div class="card shadow h-100">
-          <div class="card-body">
-            <h5 class="card-title">Easy Management</h5>
-            <p class="card-text">User-friendly interface that makes managing products and sales simple.</p>
-          </div>
-        </div>
-      </div>
-      <div class="col-md-4 mb-4">
-        <div class="card shadow h-100">
-          <div class="card-body">
-            <h5 class="card-title">Reports & Analytics</h5>
-            <p class="card-text">Generate detailed reports to understand your business performance.</p>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
+<router-outlet></router-outlet>
 
 <!-- Footer -->
-<footer class="bg-dark text-white text-center py-4 mt-auto">
+<!-- <footer class="bg-dark text-white text-center py-4 mt-auto">
   <div class="container">
     <p class="mb-0">&copy; 2025 Zeta Inventory. All rights reserved.</p>
   </div>
-</footer>
+</footer> -->
