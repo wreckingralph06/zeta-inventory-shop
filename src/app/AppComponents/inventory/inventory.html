@@ -7,24 +7,22 @@
     <div class="row g-3">
       <div class="col-md-3">
         <label for="productId" class="form-label">Product ID</label>
-        <input type="text" id="productId" name="productId" [(ngModel)]="newProduct.productId" class="form-control" required>
+        <input type="text" id="productId" name="productId" [(ngModel)]="inventoryData.productId" class="form-control" required>
       </div>
       <div class="col-md-3">
         <label for="productName" class="form-label">Product Name</label>
-        <select class="form-select" id="productName" [(ngModel)]="newProduct.productName" required>
-            <option selected>Choose your option</option>
-            <option value="1">Earphones</option>
-            <option value="2">Mobiles</option>
-            <option value="3">Playstation</option>
-        </select>
+        <input
+          type="text"
+          id="productName"
+          name="productName"
+          [(ngModel)]="inventoryData.productName"
+          class="form-control"
+          required
+        >
       </div>
       <div class="col-md-3">
         <label for="quantity" class="form-label">Quantity Available</label>
-        <input type="number" id="quantity" name="quantity" [(ngModel)]="newProduct.quantity" class="form-control" required>
-      </div>
-      <div class="col-md-3">
-        <label for="reorderPoint" class="form-label">Reorder Point</label>
-        <input type="number" id="reorderPoint" name="reorderPoint" [(ngModel)]="newProduct.reorderPoint" class="form-control" required>
+        <input type="number" id="quantity" name="quantity" [(ngModel)]="inventoryData.quantity" class="form-control" required>
       </div>
     </div>
     <div class="mt-3">
@@ -39,27 +37,25 @@
       <thead class="table-dark">
         <tr>
           <th scope="col">Product ID</th>
+          <th scope="col">Product Name</th>
           <th scope="col">Stock Available</th>
-          <th scope="col">Reorder Point</th>
           <th scope="col">Action</th>
         </tr>
       </thead>
       <tbody>
-        <!-- Sample row: Replace with *ngFor for dynamic data -->
-        <tr>
-          <td>PRD001</td>
-          <td>120</td>
-          <td>50</td>
+        <tr *ngFor="let item of inventoryList">
+          <td>{{ item.productId }}</td>
+          <td>{{ item.productName }}</td>
+          <td>{{ item.quantity }}</td>
           <td>
-            <button class="btn btn-sm btn-primary me-2">
+            <button class="btn btn-sm btn-primary me-2" [routerLink]="['/update-product']" [queryParams]="{ productId: item.productId }">
               <i class="bi bi-pencil-fill"></i> Edit
             </button>
-            <button class="btn btn-sm btn-danger">
+            <button class="btn btn-sm btn-danger" (click)="deleteItem(item)">
               <i class="bi bi-trash-fill"></i> Delete
             </button>
           </td>
         </tr>
-        <!-- Add more rows dynamically -->
       </tbody>
     </table>
   </div>

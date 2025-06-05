@@ -1,39 +1,54 @@
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms'; 
+import { RouterModule } from '@angular/router';
+import { CommonModule } from '@angular/common';
+import { LocalStorage } from '../../services/local-storage';
 
 @Component({
   selector: 'app-inventory',
-  imports: [FormsModule],
+  standalone: true,
+  imports: [FormsModule, RouterModule, CommonModule],
   templateUrl: './inventory.html',
   styleUrl: './inventory.css'
 })
 export class Inventory {
-  newProduct = {
+  inventoryData = {
     productId: '',
     productName: '',
     quantity: 0,
     reorderPoint: 0
   };
 
-  inventoryList = [
-    // Example product
-    { productId: 'PRD001', productName: 'Widget A', quantity: 100, reorderPoint: 20 }
-  ];
+  inventoryList: any[] = [];
 
-  onSubmit(): void {
-    if (this.newProduct.productId && this.newProduct.productName) {
-      this.inventoryList.push({ ...this.newProduct });
-      this.newProduct = { productId: '', productName: '', quantity: 0, reorderPoint: 0 };
-    }
-    alert("Form submitted Successfully");
+  constructor(private localStorageService: LocalStorage) {
+    this.loadFromLocalStorage();
+  }
+
+  onSubmit() {
+    this.inventoryList.push({ ...this.inventoryData });
+    this.saveToLocalStorage();
+    this.inventoryData = { productId: '', productName: '', quantity: 0, reorderPoint: 0 };
   }
 
   editItem(item: any) {
-    // Logic to edit item
     console.log('Edit:', item);
+    // Add your edit logic here
   }
 
   deleteItem(item: any) {
     this.inventoryList = this.inventoryList.filter(p => p !== item);
+    this.saveToLocalStorage();
+  }
+
+  private saveToLocalStorage() {
+    this.localStorageService.setItem('inventoryList', this.inventoryList);
+  }
+
+  private loadFromLocalStorage() {
+    const stored = this.localStorageService.getItem<any[]>('inventoryList');
+    if (stored) {
+      this.inventoryList = stored;
+    }
   }
 }
