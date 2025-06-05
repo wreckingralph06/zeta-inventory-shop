@@ -1,0 +1,48 @@
+<div class="container py-4">
+
+  <div class="mb-3">
+    <a routerLink="/create-product" class="btn btn-success">
+      <i class="bi bi-plus-circle"></i> Create Product
+    </a>
+  </div>
+
+  <!-- Form Section -->
+  <h2 class="mb-4">Add New Product</h2>
+  <form (ngSubmit)="onSubmit()" #createForm="ngForm" novalidate>
+    <div class="mb-3">
+      <label for="productId" class="form-label">Product ID</label>
+      <input type="text" id="productId" name="productId" class="form-control" [(ngModel)]="inventoryData.productId" required>
+    </div>
+
+    <div class="mb-3">
+      <label for="productName" class="form-label">Product Name</label>
+      <input type="text" id="productName" name="productName" class="form-control" [(ngModel)]="inventoryData.productName" required>
+    </div>
+
+    <div class="mb-3">
+      <label for="quantity" class="form-label">Quantity Available</label>
+      <input type="number" id="quantity" name="quantity" class="form-control" [(ngModel)]="inventoryData.quantity" required>
+    </div>
+
+    <div class="mb-3">
+      <label for="price" class="form-label">Price</label>
+      <input type="number" id="price" name="price" class="form-control" [(ngModel)]="inventoryData.price" required>
+    </div>
+
+    <div class="mb-3">
+      <label for="description" class="form-label">Description</label>
+      <textarea id="description" name="description" class="form-control" rows="3" [(ngModel)]="inventoryData.description" required></textarea>
+    </div>
+
+    <div class="mb-3">
+      <label for="productImage" class="form-label">Upload Image</label>
+      <input type="file" id="productImage" (change)="onImageSelected($event)" accept="image/*" class="form-control" />
+      <div *ngIf="inventoryData.image" class="mt-2">
+        <img [src]="inventoryData.image" alt="Preview Image" style="max-width: 200px; max-height: 150px;"/>
+      </div>
+    </div>
+
+    <button type="submit" class="btn btn-success" [disabled]="!createForm.form.valid">Add Product</button>
+  </form>
+
+</div>

@@ -12,49 +12,36 @@ import { LocalStorage } from '../../services/local-storage';
   styleUrl: './inventory.css'
 })
 export class Inventory {
-  inventoryData = {
-    productId: '',
-    productName: '',
-    quantity: 0,
-    description: '',
-    price: 0,
-    image: ''  // Base64 image string
-  };
-
   selectedImage: string = '';
 
   inventoryList: any[] = [];
+
+  currentPage: number = 1;
+  itemsPerPage: number = 5;
 
   constructor(private localStorageService: LocalStorage) {
     this.loadFromLocalStorage();
   }
 
-  onSubmit() {
-    this.inventoryList.push({ ...this.inventoryData });
-    this.saveToLocalStorage();
-    this.inventoryData = { productId: '', productName: '', quantity: 0, description: '', price: 0, image: '' };
+  get paginatedItems() {
+    const start = (this.currentPage - 1) * this.itemsPerPage;
+    return this.inventoryList.slice(start, start + this.itemsPerPage);
   }
 
-  editItem(item: any) {
-    console.log('Edit:', item);
-    // Add your edit logic here
+  get totalPages(): number {
+    return Math.ceil(this.inventoryList.length / this.itemsPerPage);
+  }
+
+  changePage(page: number) {
+    if (page >= 1 && page <= this.totalPages) {
+      this.currentPage = page;
+    }
   }
   
   confirmDelete(item: any) {
     const confirmed = confirm(`Are you sure you want to delete "${item.productName}"?`);
     if (confirmed) {
       this.deleteItem(item);
-    }
-  }
-
-  onImageSelected(event: any) {
-    const file = event.target.files[0];
-    if (file) {
-      const reader = new FileReader();
-      reader.onload = () => {
-        this.inventoryData.image = reader.result as string;
-      };
-      reader.readAsDataURL(file);
     }
   }
 

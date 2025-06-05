@@ -45,4 +45,18 @@ export class UpdateProduct implements OnInit {
       this.router.navigate(['/inventory']);
     }
   }
+
+  onImageChange(event: Event): void {
+  const input = event.target as HTMLInputElement;
+  if (input.files && input.files.length) {
+    const file = input.files[0];
+    const reader = new FileReader();
+
+    reader.onload = () => {
+      this.product.image = reader.result as string; // Base64 string
+    };
+
+    reader.readAsDataURL(file);
+  }
+}
 }
