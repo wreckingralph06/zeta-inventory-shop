@@ -24,6 +24,25 @@
         <label for="quantity" class="form-label">Quantity Available</label>
         <input type="number" id="quantity" name="quantity" [(ngModel)]="inventoryData.quantity" class="form-control" required>
       </div>
+
+      <div class="col-md-6">
+        <label for="description" class="form-label">Description</label>
+        <textarea id="description" name="description" class="form-control" rows="3" [(ngModel)]="inventoryData.description" required></textarea>
+      </div>
+
+      <div class="col-md-3">
+        <label for="price" class="form-label">Price</label>
+        <input type="number" id="price" name="price" class="form-control" [(ngModel)]="inventoryData.price" required>
+      </div>
+      
+      <div class="col-md-3">
+        <label for="productImage" class="form-label">Product Image</label>
+        <input type="file" id="productImage" (change)="onImageSelected($event)" accept="image/*" class="form-control">
+      </div>
+
+      <div *ngIf="inventoryData.image" class="mt-2">
+        <img [src]="inventoryData.image" alt="Preview" class="img-thumbnail" width="100">
+      </div>
     </div>
     <div class="mt-3">
       <button class="btn btn-success" type="submit" [disabled]="!inventoryForm.form.valid">
@@ -39,6 +58,9 @@
           <th scope="col">Product ID</th>
           <th scope="col">Product Name</th>
           <th scope="col">Stock Available</th>
+          <th scope="col" style="width: 400px;">Description</th>
+          <th scope="col">Price</th>
+          <th scope="col">Image</th>
           <th scope="col">Action</th>
         </tr>
       </thead>
@@ -48,15 +70,43 @@
           <td>{{ item.productName }}</td>
           <td>{{ item.quantity }}</td>
           <td>
+            <span>
+              {{ item.description | slice:0:50 }}
+              <span *ngIf="item.description.length > 50 && !item.showFullDesc">...</span>
+              <span *ngIf="item.showFullDesc">{{ item.description.slice(50) }}</span>
+            </span>
+            <a href="#" (click)="toggleDescription(item, $event)" *ngIf="item.description.length > 50">
+              {{ item.showFullDesc ? 'See less' : 'See more' }}
+            </a>
+          </td>
+          <td>{{ item.price }}</td>
+          <td>
+            <img [src]="item.image" class="img-thumbnail thumb-img" alt="Product image"
+                (click)="openImageModal(item.image)" style="cursor: pointer;">
+          </td>
+          <td>
+            <button class="btn btn-sm btn-info me-2" [routerLink]="['/view-product']" [queryParams]="{ productId: item.productId }">
+              <i class="bi bi-eye-fill"></i> View
+            </button>
             <button class="btn btn-sm btn-primary me-2" [routerLink]="['/update-product']" [queryParams]="{ productId: item.productId }">
               <i class="bi bi-pencil-fill"></i> Edit
             </button>
-            <button class="btn btn-sm btn-danger" (click)="deleteItem(item)">
+            <button class="btn btn-sm btn-danger" (click)="confirmDelete(item)">
               <i class="bi bi-trash-fill"></i> Delete
             </button>
           </td>
         </tr>
       </tbody>
     </table>
+
+    <div class="modal fade" id="imageModal" tabindex="-1" aria-labelledby="imageModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-content">
+          <div class="modal-body text-center">
+            <img [src]="selectedImage" class="img-fluid" alt="Enlarged image">
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 </div>

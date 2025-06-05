@@ -1,0 +1,31 @@
+.image-hover-container {
+  position: relative;
+  display: inline-block;
+}
+
+.thumb-img {
+  width: 50px;
+  height: 50px;
+  object-fit: cover;
+  cursor: pointer;
+  border-radius: 4px;
+}
+
+.zoom-img {
+  position: absolute;
+  top: 0;
+  left: 60px;
+  width: 200px;
+  height: auto;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  z-index: 10;
+  display: none;
+  background: white;
+  padding: 4px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+.image-hover-container:hover .zoom-img {
+  display: block;
+}

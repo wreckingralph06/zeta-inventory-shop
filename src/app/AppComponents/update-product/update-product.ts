@@ -16,7 +16,9 @@ export class UpdateProduct implements OnInit {
     productId: '',
     productName: '',
     quantity: 0,
-    reorderPoint: 0
+    description: '',
+    price: 0,
+    image: ''
   };
 
   constructor(
